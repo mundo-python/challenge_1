@@ -1,18 +1,15 @@
 import requests
- 
+import feedparser
+import json
 
 url = f'https://www.theverge.com/rss/index.xml'
 r= requests.get(url)
 
-if r.status_code == 200:
-	xml_content = r.text
-	print(xml_content)
-else:
-	print("error")
+if r.status_code != 200:
+    print(f"error with status code {r.status_code}")
 
 #los primeros 10 items
 
-import feedparser
 feed = feedparser.parse(url)
 
 items = feed.entries[:10]
@@ -27,7 +24,6 @@ for i, item in enumerate(items, start=1):
     print(f"Link: {link}")
 
  #Guardar un archivo JSON
-import json
 data = []
 for item in items:
     lista = {
